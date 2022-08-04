@@ -2,7 +2,7 @@
 This was my solution for the game 'Steal the Flag', for the AI Contest organized in BUET CSE FEST 2022, in which it ranked 5th.
 In the game, your bots will play functioning on your code, with opponents' bots (1 v 1 battle) functioning with codes written by opponents.
 
-* I am not involved in any way, making of the game. I just participated in the contest where I wrote solutions and I am presenting them here. *
+*I am not involved in any way, making of the game. I just participated in the contest where I wrote solutions and I am presenting them here.*
 
 ## For a basic understanding of rules and objectives of the game, visit here: 
 https://www.codingame.com/contribute/view/24899fba3db2b90428fb4f3ecb1505df954dd
@@ -11,10 +11,10 @@ https://www.codingame.com/contribute/view/24899fba3db2b90428fb4f3ecb1505df954dd
 Note: This is a work in progress. This solution was written during the contest, for which I had no planning upfront and I just went along with the flow. So my code is a total mess. I will try to clean up my code. 
 Here, I try to present the key ideas that I used in the solution. I will not dive into full depths of my code as that would make things complicated and probably incomprehensible. So, I will rather give an overview of my strategies and try to give a breakdown of approaches for the solution.
 ```
-** At the end of text, I have added some description of key words I have used. **
+**At the end of text, I have added some description of key words I have used.**
 
 ### Basic summary of what to do / How to play
-Many parameters will be given to you (as ** inputs **), such as position and helath of your minions and of * visible * opponent's minions , flag's positions and map data. You have to ** output ** commands for each of your minion for every ** turn **. The commands are:
+Many parameters will be given to you (as **inputs**), such as position and helath of your minions and of *visible* opponent's minions , flag's positions and map data. You have to **output** commands for each of your minion for every **turn**. The commands are:
 ```
   MOVE minionID x y: the minion with the identifier minionID moves towards the given cell following the shortest path.
   FIRE minionID: the minion with the identifier minionID uses FIRE.
@@ -30,26 +30,26 @@ Now, if you are familiar with the game, you may have noticed the main following 
 - Capture the flag or,
 - Destroy all Opponent Bots
 
-For beginning, let us consider a few ** strategies ** one can take to win the game:
+For beginning, let us consider a few **strategies** one can take to win the game:
 - Send at least one bot to capture the opponent flag
 - Defending our own flag with one of our bots (using Power Ups to destroy or delay enemy bots)
 - Good coin collection system by bots, since they allow us to use power ups
 - Try to destroy all enemy bots using Power Ups (Fire)
 
-A player can implement ** one ** of those above mentioned strategies or all of them or a ** good combination ** of them.
+A player can implement **one** of those above mentioned strategies or all of them or a **good combination** of them.
 
 #### Randomness
 The map for 1 v 1 battles were random. So, it is very difficult to obtain one single good solution that would dominate every other bots. For example, my solution very often was defeated by much lower ranked solutions in some maps. Especially, there are maps when the path between the flag bases contains a very straight path (without much turn and twists). In those maps, the minions get very exposed. So, if not handled properly, results would not be good. And my solution many times have failed in those conditions. That indicates, my solution has some major flaws. What I tried to do was play with probability. So, I tried to maintain that my solution would probably have a chance of winning against all sorts of bots.
 
 ### Summary of my strategies
-1. I send one bot (closest to opponent's flag base) to capture the opponent flag (I call it ** runner **)
-2. I send another of my bot which try to follow my runner closely. So that, if my runner fails to collect opponent flag, it can jump on the task. This bot plays dual roles. Other objective of it is to collect coins. (I call it ** troller ** )
+1. I send one bot (closest to opponent's flag base) to capture the opponent flag (I call it **runner**)
+2. I send another of my bot which try to follow my runner closely. So that, if my runner fails to collect opponent flag, it can jump on the task. This bot plays dual roles. Other objective of it is to collect coins. (I call it **troller** )
 3. I send one to defend my flag.
 4. If there are more bots (more than 3), they will primarily collect coins. If my runner and troller are destroyed they may get assigned to those jobs.
 5. My runner freezes the opponent defender of their flag if it senses danger (my minion's health is down or opponent is using fire too frequently.) 
 6. My defender mainly uses fire to destroy opponent bots if they are in close vicinity of my flag. When there is not enough * credit * (score) to destroy opponent bot, it may use freeze to delay the opponent if possible.
-7. If my flag is captured, my defender will follow the carrier of * my flag *.
-8. My bots try to avoid fire of opponent bots by ** Jiggling **. But that is *only* on few conditions. One condition is, if they sense our opponent is playing ** rough ** (using power ups very frequently at the beinning phase of the game).
+7. If my flag is captured, my defender will follow the carrier of *my flag*.
+8. My bots try to avoid fire of opponent bots by **Jiggling**. But that is *only* on few conditions. One condition is, if they sense our opponent is playing **aggressive** (using power ups very frequently at the beinning phase of the game).
 
 Note: I have not used the power up "MINE" at all. And I only use BFS without limit for the first turn (as there is 1000 ms to send output), but for other times, I mostly use with limited steps (as there is 50 ms to send output) ...
 
@@ -73,7 +73,7 @@ For Map, I created a 2D array to keep track of empty cells, cells with coins and
                 map[i][j] = 0;
     }
 ```
-Also, based on where the * opponent flag base * and * my flag base * is, I determine where to send my * runner * and * defender *.
+Also, based on where the *opponent flag base* and *my flag base* is, I determine where to send my *runner* and *defender*.
 
 #### Keeping track of data for my bots
 To keep track of data of my minions (bots; since they are called minions in the game, I will be referencing them as such in later text),
@@ -102,7 +102,7 @@ In the code, you can see another struct with similar name,
       }
   };
 ```
-This struct was ** not ** used to keep track of the data, rather to ** Sort ** my minions on distance to opponent flag base. So that, we can send the closest to capture the opponent flag. Also, send the farthest (from opponent's flag, which implies * most of the time *, closest to my flag base) to defend my flag. And assign rest of the bots to collect coins.
+This struct was **not** used to keep track of the data, rather to **Sort** my minions on distance to opponent flag base. So that, we can send the closest to capture the opponent flag. Also, send the farthest (from opponent's flag, which implies *most of the time*, closest to my flag base) to defend my flag. And assign rest of the bots to collect coins.
 
 #### Using BFS to determine (to sort my minions and assign roles/ nearest safe cell to jiggle/ good coin path)
 ```
@@ -231,7 +231,7 @@ for (int i = 0; i < my_alive_minion_cnt; i++) {
     }
 ```
 #### Output and preparation for next iteration, update timers
-- In this segment, a major task that I do is check if a minion with important role (runner/ 2nd runner/ defender) is ** dead **, then assign those roles to nearest (did not use BFS here, just column position to check distance) minions available.
+- In this segment, a major task that I do is check if a minion with important role (runner/ 2nd runner/ defender) is **dead**, then assign those roles to nearest (did not use BFS here, just column position to check distance) minions available.
 - Another thing I do here is, if my runner is in danger (low health), send 2nd runner close to him so that in case of failure, 2nd minion can carry on the show.
 - Also, here I take some decisions based on previous events and game timer -- such as if the opponent has played aggressively
 - Update variables for next iteration such as timers, health of my minions, dodge counters...
@@ -248,7 +248,7 @@ From 15 July to 22 July the contest was held in the BUET CSE FEST 2022. During t
 
 These steps of evolution were not like always progressively better. It's just that some of the counter measures were very adaptive with some measures. So, it was a continous back and forth intense battle between the competitors.
 
-#### I think there are more opportunities to create a much better and optimized solution that would perform better. If the contest went on for a little longer, we probably might have seen some new steps of evolution in the game by now. But, for now, it is as it is. Until, someone comes with more clever solution. Credits to the ones who created this game.
+##### Credits to the ones who created this game. I think there are more opportunities to create a much better and optimized solution that would perform better. If the contest went on for a little longer, we probably might have seen some new steps of evolution in the game by now. But, for now, it is as it is. Until, someone comes with more clever solution.
 
 ### KEYWORDS
 - Runner: The bot that I send to capture opponent flag

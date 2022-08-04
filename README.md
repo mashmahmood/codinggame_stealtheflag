@@ -2,7 +2,7 @@
 This was my solution for the game 'Steal the Flag', for the AI Contest organized in BUET CSE FEST 2022, in which it ranked 5th.
 In the game, your bots will play functioning on your code, with opponents' bots (1 v 1 battle) functioning with codes written by opponents.
 
-## I am not involved in any way, making of the game. I just participated in the contest where I wrote solutions and I am presenting them here.
+* I am not involved in any way, making of the game. I just participated in the contest where I wrote solutions and I am presenting them here. *
 
 ## For a basic understanding of rules and objectives of the game, visit here: 
 https://www.codingame.com/contribute/view/24899fba3db2b90428fb4f3ecb1505df954dd

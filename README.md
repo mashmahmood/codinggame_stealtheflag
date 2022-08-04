@@ -1,16 +1,19 @@
 # Steal the Flag
-This was my solution for the game 'Steal the Flag', for the AI Contest organized in BUET CSE FEST 2022, in which it ranked 5th.
+![image of the game](https://user-images.githubusercontent.com/109825910/182937847-6df6f6a4-95d0-4dac-bc99-0d5fd310bda2.png)
+
+This was my solution for the game 'Steal the Flag', for the AI Contest organized in **BUET CSE FEST 2022**, in which it ranked 5th.
 In the game, your bots will play functioning on your code, with opponents' bots (1 v 1 battle) functioning with codes written by opponents.
 
 *I am not involved in any way, making of the game. I just participated in the contest where I wrote solutions and I am presenting them here.*
 
-## For a basic understanding of rules and objectives of the game, visit here: 
+### For a basic understanding of rules and objectives of the game, visit here: 
 https://www.codingame.com/contribute/view/24899fba3db2b90428fb4f3ecb1505df954dd
 
 ```
 Note: This is a work in progress. This solution was written during the contest, for which I had no planning upfront and I just went along with the flow. So my code is a total mess. I will try to clean up my code. 
 Here, I try to present the key ideas that I used in the solution. I will not dive into full depths of my code as that would make things complicated and probably incomprehensible. So, I will rather give an overview of my strategies and try to give a breakdown of approaches for the solution.
 ```
+
 **At the end of text, I have added some description of key words I have used.**
 
 ### Basic summary of what to do / How to play
@@ -39,7 +42,7 @@ For beginning, let us consider a few **strategies** one can take to win the game
 A player can implement **one** of those above mentioned strategies or all of them or a **good combination** of them.
 
 #### Randomness
-The map for 1 v 1 battles were random. So, it is very difficult to obtain one single good solution that would dominate every other bots. For example, my solution very often was defeated by much lower ranked solutions in some maps. Especially, there are maps when the path between the flag bases contains a very straight path (without much turn and twists). In those maps, the minions get very exposed. So, if not handled properly, results would not be good. And my solution many times have failed in those conditions. That indicates, my solution has some major flaws. What I tried to do was play with probability. So, I tried to maintain that my solution would probably have a chance of winning against all sorts of bots.
+The map for 1 v 1 battles were random. So, it is very difficult to obtain one single good solution that would dominate every other bots. For example, my solution very often was defeated by much lower ranked solutions in some maps. Especially, there are maps when the path between the flag bases contains a very straight path (without much turn and twists). In those maps, the minions get very exposed. So, if not handled properly, results would not be good. And my solution many times have failed in those conditions. That indicates, my solution has some major flaws. What I tried to do was play with probability. So, I tried to maintain that my solution would probably have a good chance of winning against all sorts of bots in most maps.
 
 ### Summary of my strategies
 1. I send one bot (closest to opponent's flag base) to capture the opponent flag (I call it **runner**)
@@ -51,7 +54,7 @@ The map for 1 v 1 battles were random. So, it is very difficult to obtain one si
 7. If my flag is captured, my defender will follow the carrier of *my flag*.
 8. My bots try to avoid fire of opponent bots by **Jiggling**. But that is *only* on few conditions. One condition is, if they sense our opponent is playing **aggressive** (using power ups very frequently at the beinning phase of the game).
 
-Note: I have not used the power up "MINE" at all. And I only use BFS without limit for the first turn (as there is 1000 ms to send output), but for other times, I mostly use with limited steps (as there is 50 ms to send output) ...
+Note: I have not used the power up "MINE" at all. And I only use BFS without limit for the first turn (as there is 1000 ms to send output), but for other times, I mostly use with limited steps (as there is 50 ms to send output).
 
 ### Moving on to my solution
 There are a lot of parameters to handle.
@@ -104,7 +107,7 @@ In the code, you can see another struct with similar name,
 ```
 This struct was **not** used to keep track of the data, rather to **Sort** my minions on distance to opponent flag base. So that, we can send the closest to capture the opponent flag. Also, send the farthest (from opponent's flag, which implies *most of the time*, closest to my flag base) to defend my flag. And assign rest of the bots to collect coins.
 
-#### Using BFS to determine (to sort my minions and assign roles/ nearest safe cell to jiggle/ good coin path)
+#### Using BFS to determine (to sort my minions and assign roles/ find nearest safe cell to jiggle/ find good coin path)
 ```
 //COMPARE FUNCTION TO SORT MINIONS (on distance to op flag base)
 struct CompareMinion {
